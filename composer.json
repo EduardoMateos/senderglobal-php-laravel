@@ -1,0 +1,29 @@
+{
+    "name": "eduardom/sender-global",
+    "description": "Integración simple con senderglobal",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Eduardo Mateos",
+            "email": "eduardomateossoto@gmail.com"
+        }
+    ],
+    "require": {
+        "php" : ">=5.6.4"
+    },
+    "autoload": {
+        "psr-4" : {
+            "Eduardom\\SenderGlobal\\" : "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Eduardom\\SenderGlobal\\SenderGlobalServiceProvider"
+            ],
+            "aliases": {
+                "SenderGlobal": "Eduardom\\SenderGlobal\\Facades\\SenderGlobal"
+            }
+        }
+    }
+}
