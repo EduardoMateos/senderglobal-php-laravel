@@ -6,4 +6,5 @@ return [
     'api_pass'              => env('SENDERGLOBAL_API_PASS',''),
     'api_from_name'         => env('SENDERGLOBAL_FROM_NAME',''),
     'api_reply_email'       => env('SENDERGLOBAL_REPLY_EMAIL',''),
+    'api_id_account'        => env('SENDERGLOBAL_API_ID_ACCOUNT','')
 ];
