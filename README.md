@@ -1,4 +1,4 @@
-# senderglobal-php-laravel
+# Package Laravel Senderglobal
 Integración de Laravel con www.senderglobal.com
 
 ### Instalación 📋
