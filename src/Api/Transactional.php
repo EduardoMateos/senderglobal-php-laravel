@@ -1,7 +1,11 @@
 <?php
-namespace Eduardom\SenderGlobal;
+namespace Eduardom\SenderGlobal\Api;
 
-class ApiClient
+/*
+* Class to send mail transactional
+*/
+
+class Transactional extends Client
 {
 
     protected $_emailRecipient;
@@ -143,7 +147,7 @@ class ApiClient
      *
      * @return $response
      */
-    public function sendMail()
+    public function send()
     {
         $params = [
            'id' => $this->_id,
@@ -157,22 +161,7 @@ class ApiClient
            'reply' => $this->_emailReply,
         ];
 
-        $postfields = '';
-        foreach ($params as $key => $value) {
-            $postfields .= "{$key}={$value}&";
-        }
-
-        $postfields = rtrim($postfields, '&');
-        $handler = curl_init();
-        curl_setopt($handler, CURLOPT_URL, $this->_urlApi);
-        curl_setopt($handler, CURLOPT_POST, 1);
-        curl_setopt($handler, CURLOPT_POSTFIELDS, $postfields);
-        curl_setopt($handler, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($handler, CURLOPT_CONNECTTIMEOUT, 0); 
-        curl_setopt($handler, CURLOPT_TIMEOUT, 15);
-        $res = curl_exec($handler);
-
-        return $res;
+        return $this->get($params, $this->_urlApi);
     }
 
 }
