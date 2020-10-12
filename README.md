@@ -21,12 +21,13 @@ SENDERGLOBAL_FROM_NAME=FromName
 SENDERGLOBAL_REPLY_EMAIL=reply@email.com
 ```
 
-### Uso 📖
+### Correos transaccionales ✉️
 
 Simplemente desde cualquier controlador:
 
 ```
-SenderGlobal::setEmailRecipient('eduardomateossoto@gmail.com')
+SenderGlobal::transactional()
+            ->setEmailRecipient('eduardomateossoto@gmail.com')
             ->setSubject('mail de prueba')
             ->setContent(rawurlencode('contenido del mail'))
             ->sendMail();
@@ -35,17 +36,48 @@ SenderGlobal::setEmailRecipient('eduardomateossoto@gmail.com')
 Si necesitas cargar las configuraciones de la API definidas en el .env dinámicamente puedes hacerlo así:
 
 ```
-SenderGlobal::setEmailRecipient('eduardomateossoto@gmail.com')
-                ->setFromName('From Name')
-                ->setSubject('mail de prueba')
-                ->setContent(rawurlencode('contenido del mail'))
-                ->setEmailReply('email@reply.es')
-                ->setId('XXXXXX')
-                ->setUser('XXXXXXXXX_API')
-                ->setPass('XXXXXXXXXXXXX')
-                ->setIdAccount('X')
-                ->setUrlApi('http://webapp.senderglobal.com/transac/XXXXXXX')
-                ->sendMail();
+SenderGlobal::transactional()
+            ->setEmailRecipient('eduardomateossoto@gmail.com')
+            ->setFromName('From Name')
+            ->setSubject('mail de prueba')
+            ->setContent(rawurlencode('contenido del mail'))
+            ->setEmailReply('email@reply.es')
+            ->setId('XXXXXX')
+            ->setUser('XXXXXXXXX_API')
+            ->setPass('XXXXXXXXXXXXX')
+            ->setIdAccount('X')
+            ->setUrlApi('http://webapp.senderglobal.com/transac/XXXXXXX')
+            ->sendMail();
+```
+### Carritos abandonados 🛒
+
+Ejemplo de envio de un carrito abandonado:
+
+```
+$products = [];
+foreach(range(0, 2) as $n){
+    $product = [
+        'nombre' => 'Iphone 1'.$n,
+        'url' => 'https://www.apple.es',
+        'img' => 'https://www.teknofilo.com/wp-content/uploads/2020/05/iPhone-12.jpg',
+        'price' => '1000',
+        'desc' => 'A simple phone',
+    ];
+    array_push($products, $product);
+}
+
+$now = Carbon\Carbon::now('Europe/Madrid');
+$response = SenderGlobal::abandonedCart()
+            ->setUrlApi('http://webapp.senderglobal.com/app/APIS/XXXXXXXXXXXXXXX')
+            ->setUser('XXXXXXXXX_API')
+            ->setPass('XXXXXXXXXXXXX')
+            ->setBaseCode('XXXXXXXX')
+            ->setEmailRecipient('eduardomateossoto@gmail.com')
+            ->setSource('ES')
+            ->setTemplate('1')
+            ->setProducts($products)
+            ->setDate($now)
+            ->send();
 ```
 
 ## Autores ✒️
